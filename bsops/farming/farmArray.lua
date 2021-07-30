@@ -59,7 +59,7 @@ while true do
         end
 
         columnUp = not columnUp
-        if (not (column + 1 > columns)) then
+        if (not (column + 1 > totalCols)) then
             navigation:moveRight(home)
         end
     end
