@@ -5,16 +5,16 @@ local packInj = require("bsops.core.packageInjector")
 local robot = packInj.require("robot", true)
 local navigation = require("bsops.nav.navigation")
 
-local colLeft = 0
-local colRight = 4
 local rowForward = 5
 local rowBack = -1
+local colLeft = 0
+local colRight = 4
 if (not (... == nil)) then
-    local rows, columns = ...
-    colLeft = tonumber(rows[1])
-    colRight = tonumber(rows[2])
-    rowForward = tonumber(columns[1])
-    rowBack = tonumber(columns[2])
+    local rowForward, rowBack, colLeft, colRight = ...
+    rowForward = tonumber(rowForward)
+    rowBack = tonumber(rowBack)
+    colLeft = tonumber(colLeft)
+    colRight = tonumber(colRight)
 end
 print("Rows: ", colLeft, " left and ", colRight, " right")
 print("Columns: ", rowForward, " forward and ", rowBack, " back")
