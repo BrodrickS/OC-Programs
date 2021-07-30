@@ -21,31 +21,48 @@ Navigation = {
 
 -- Get a string that represents this current location and heading
 function Navigation:getHomeRef()
-    home = { X = self.xLoc, Y = self.yLoc, Z = self.zLoc, R = self.Heading }
+    local home = { X = self.xLoc, Y = self.yLoc, Z = self.zLoc, R = self.Heading }
     return home
 end
 
--- Return to the noted home
+function Navigation.getOriginRef()
+    local origin = { X = 0, Y = 0, Z = 0, R = sides.forward }
+    return origin
+end
+
+-- Check if we are already Home
+function Navigation:isAtHome(home)
+    -- TODO
+    return false
+end
+
+-- Return to the location of the home argument
 function Navigation:returnToHome(home)
+    -- Get ref to origin
+    local origin = self.getOriginRef()
+
     -- Handle X Loc
-    if (self.xLoc > 0) then
-        self:move(home, sides.negx, self.xLoc)
-    elseif (self.xLoc < 0) then
-        self:move(home, sides.posx, -self.xLoc)
+    local xDiff = home.X - self.xLoc
+    if (xDiff > 0) then
+        self:move(origin, sides.posx, xDiff)
+    elseif (xDiff < 0) then
+        self:move(origin, sides.negx, -xDiff)
     end
 
     -- Handle Y Loc
-    if (self.yLoc > 0) then
-        self:move(home, sides.negy, self.yLoc)
-    elseif(self.yLoc < 0) then
-        self:move(home, sides.posy, -self.yLoc)
+    local yDiff = home.Y - self.yLoc
+    if (yDiff > 0) then
+        self:move(origin, sides.posy, yDiff)
+    elseif(yDiff < 0) then
+        self:move(origin, sides.negy, -yDiff)
     end
     
     -- Handle Z Loc
-    if (self.zLoc > 0) then
-        self:move(home, sides.negz, self.zLoc)
-    elseif(self.zLoc < 0) then
-        self:move(home, sides.posz, -self.zLoc)
+    local zDiff = home.Z - self.zLoc
+    if (zDiff > 0) then
+        self:move(origin, sides.posz, zDiff)
+    elseif(zDiff < 0) then
+        self:move(origin, sides.negz, -zDiff)
     end
 
     -- Handle Heading
