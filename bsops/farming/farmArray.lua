@@ -16,9 +16,10 @@ if (not (... == nil)) then
     colLeft = tonumber(colLeft)
     colRight = tonumber(colRight)
 end
-print("Rows: ", colLeft, " left and ", colRight, " right")
-print("Columns: ", rowForward, " forward and ", rowBack, " back")
 
+-- Output
+print("Rows: ", rowForward, " forward and ", rowBack, " back")
+print("Columns: ", colLeft, " left and ", colRight, " right")
 
 local home = navigation:getHomeRef()
 
