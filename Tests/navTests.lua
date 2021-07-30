@@ -1,5 +1,5 @@
-local sides = require("Mocks.sides")
-local navigation = require("Packages.Navigation.navigation")
+local sides = require("mocks.sides")
+local navigation = require("bsops.nav.navigation")
 
 local originRef = navigation:getHomeRef()
 

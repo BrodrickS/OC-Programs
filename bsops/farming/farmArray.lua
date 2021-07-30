@@ -1,9 +1,9 @@
 -- Farms an array of fields defined by x y pairs
 
 -- Dependencies
-local packInj = require("packageInjector")
+local packInj = require("bsops.core.packageInjector")
 local robot = packInj.require("robot", true)
-local navigation = require("Packages.Navigation.navigation")
+local navigation = require("bsops.nav.navigation")
 
 local rows = 5
 local columns = 5
