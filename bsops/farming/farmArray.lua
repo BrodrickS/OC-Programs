@@ -10,7 +10,8 @@ local rowBack = -1
 local colLeft = 0
 local colRight = 4
 if (not (... == nil)) then
-    local rowForward, rowBack, colLeft, colRight = ...
+    print("Reading")
+    rowForward, rowBack, colLeft, colRight = ...
     rowForward = tonumber(rowForward)
     rowBack = tonumber(rowBack)
     colLeft = tonumber(colLeft)

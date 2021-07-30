@@ -4,6 +4,7 @@
 local packInj = require("bsops.core.packageInjector")
 local robot = packInj.require("robot", true)
 local sides = packInj.require("sides", true)
+local computer = packInj.require("computer", true)
 
 -- Singleton Declation
 if (not Navigation == nil) then
@@ -71,7 +72,8 @@ function Navigation:move(home, direction, distance)
                     self.xLoc = self.xLoc - 1
                 end
             else
-                -- TODO
+                -- TOOD
+                computer.beep(40, .2)
             end
     end
 end
