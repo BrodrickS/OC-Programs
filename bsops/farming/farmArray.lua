@@ -57,7 +57,9 @@ while true do
             else
                 navigation:moveBack(home)
             end
-            robot.useDown()
+            if (robot.detectDown()) then
+                robot.useDown()
+            end
         end
 
         columnUp = not columnUp
@@ -72,5 +74,6 @@ while true do
        robot.select(i)
        robot.dropDown() 
     end
+    robot.select(1)
 
 end
