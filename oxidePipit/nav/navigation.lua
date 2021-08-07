@@ -1,7 +1,7 @@
 -- Navigation Module
 -- Handles more complex motion, homing, pathing, and relative movement
 
-local packInj = require("bsops.core.packageInjector")
+local packInj = require("oxidePipit.core.packageInjector")
 local robot = packInj.require("robot", true)
 local sides = packInj.require("sides", true)
 local computer = packInj.require("computer", true)

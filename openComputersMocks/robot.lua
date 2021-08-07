@@ -1,4 +1,5 @@
-local sides = require('Mocks.sides')
+local packIng = require("oxidePipit.core.packageInjector")
+local sides = packIng.require("sides", true)
 
 RealX = 0
 RealY = 0
@@ -14,7 +15,7 @@ function robot.use(direction)
 end
 
 function robot.useDown(direction)
-    robot.logVerbose("use done")
+    robot.logVerbose("use down")
     return true
 end
 
@@ -65,6 +66,13 @@ function robot.getLocation()
     return RealX .. ", " .. RealY .. ", " .. RealZ .. ", " .. sides:sideName(RealHeading)
 end
 
+-- Detection
+function robot.detectDown()
+    robot.logVerbose("detect down, return true")
+    return true
+end
+ 
+-- Logging
 function robot.logVerbose(message)
     print("ROBOT API - ", message)
 end

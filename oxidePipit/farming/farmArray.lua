@@ -1,9 +1,11 @@
 -- Farms an array of fields defined by x y pairs
 
--- Dependencies
-local packInj = require("bsops.core.packageInjector")
+-- Dependencies - OpenComputers
+local packInj = require("oxidePipit.core.packageInjector")
 local robot = packInj.require("robot", true)
-local navigation = require("bsops.nav.navigation")
+
+-- Dependencies - Oxide Pipit
+local navigation = require("oxidePipit.nav.navigation")
 
 local rowForward = 5
 local rowBack = -1
@@ -19,8 +21,8 @@ if (not (... == nil)) then
 end
 
 -- Output
-print("Rows: ", rowForward, " forward and ", rowBack, " back")
-print("Columns: ", colLeft, " left and ", colRight, " right")
+print("Rows: " .. tostring(rowForward) .. " forward and " .. tostring(rowBack) .. " back")
+print("Columns: " .. tostring(colLeft) .. " left and " .. tostring(colRight) .. " right")
 
 local home = navigation:getHomeRef()
 

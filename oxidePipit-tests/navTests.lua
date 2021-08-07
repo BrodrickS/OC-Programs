@@ -1,5 +1,9 @@
-local sides = require("mocks.sides")
-local navigation = require("bsops.nav.navigation")
+-- Open Computers Libraries
+local packInj = require("oxidePipit.core.packageInjector")
+local sides = packInj.require("sides", true)
+
+-- Oxide Pipit Libraries
+local navigation = require("oxidePipit.nav.navigation")
 
 local originRef = navigation:getHomeRef()
 for i = 1, 5 do navigation:moveLeft(originRef) end
