@@ -5,9 +5,9 @@ local sides = packInj.require("sides", true)
 -- Oxide Pipit Libraries
 local navigation = require("oxidePipit.nav.navigation")
 
-local originRef = navigation:getHomeRef()
+print ("origin:", navigation.origin)
 for i = 1, 5 do navigation:moveLeft(originRef) end
-local bottomLeftRef = navigation:getHomeRef()
+local bottomLeftRef = navigation:getReferenceFrame()
 print("mark.")
 navigation:moveForward(bottomLeftRef)
 for i = 1, 5 do navigation:moveRight(bottomLeftRef) end
