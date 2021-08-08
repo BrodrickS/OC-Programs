@@ -8,16 +8,20 @@
 
 -- See oxidePipit-tests for examples
 
-----------------------------------------------------------------
+-- #################################################################
 -- Dependencies
+-- #################################################################
 
--- Open Computers
+-- Open Computers dependencies
 local packInj = require("oxidePipit.core.packageInjector")
 local sides = packInj.require("sides", true)
 
--- Oxide Pipit
+-- Oxide Pipit dependencies
 
-----------------------------------------------------------------
+-- #################################################################
+-- Class Declaration
+-- #################################################################
+
 -- Meta class declaration, with any fields
 local referenceFrame = {
     xPos = 0,
@@ -29,19 +33,29 @@ local referenceFrame = {
 -- Constructor
 function referenceFrame:new (x, y, z, h)
     -- Inherits from nothing
-    o = {} 
+    local o = {} 
     setmetatable(o, self)
     self.__index = self
+    
     -- Set Default Values
-    o.xPos = x or 0 
-    o.yPos = y or 0 
-    o.zPos = z or 0
-    o.heading = h or 0
+    o.__init(x, y, z, h)
+
+    -- Return new object
     return o
 end
 
-----------------------------------------------------------------
+-- Initializer
+function referenceFrame:__init(x, y, z, h)
+    -- Get and set default values here 
+    self.xPos = x or 0 
+    self.yPos = y or 0 
+    self.zPos = z or 0
+    self.heading = h or 0
+end
+
+-- #################################################################
 -- Methods
+-- #################################################################
 
 -- Tests for equality of position only
 -- returns: bool
@@ -51,16 +65,20 @@ function referenceFrame:positionEquals(other)
     return self.xPos == other.xPos and self.yPos == other.yPos and self.zPos == other.zPos
 end
 
-----------------------------------------------------------------
+
+-- -----------------------------------------------------------------
 -- Metamethods
+-- -----------------------------------------------------------------
 
 -- Converts to a string representation of position and heading
+-- takes: referenceFrame
 -- returns: string
 function referenceFrame:__tostring()
     return "X: " .. tostring(self.xPos) .. " Y: " .. tostring(self.yPos) .. " Z: " .. tostring(self.zPos) .. " H: " .. tostring(self.heading);
 end
 
 -- Tests for equality of position and heading
+-- takes: referenceFrame
 -- returns: bool
 function referenceFrame:__equals(other)
     if (other == nil) then return false end
@@ -68,8 +86,8 @@ function referenceFrame:__equals(other)
     return self:positionEquals(other) and self.heading == other.heading    
 end
 
-
-----------------------------------------------------------------
+-- #################################################################
 -- Package Output
+-- #################################################################
 
 return referenceFrame
