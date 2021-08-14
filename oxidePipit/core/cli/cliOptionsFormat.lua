@@ -48,12 +48,12 @@ function cliOptionsFormat:__init(generateVersion, generateHelp)
 
     -- Create version option
     if (generateVersion or generateVersion == nil) then
-        self:addOption("v", "version", 0, 0, "Prints the version number of this program")
+        self:addOption("v", "version", 0, 0, "Prints the version number of this program.")
     end
 
     -- Create
     if (generateHelp or generateHelp == nil) then
-        self:addOption("h", "help", 0, 0, "Shows this file")
+        self:addOption("h", "help", 0, 0, "Shows this screen.")
     end
 end
 
@@ -122,7 +122,14 @@ function cliOptionsFormat:parse(...)
     local argsCount = 0 
     for k, _ in pairs(args) do argsCount = argsCount + 1 end
 
-    local optionsPresent = {}
+    
+    local defaultArgs = {
+        count = 0,
+    }
+    local optionsPresent = {
+        defaultArgs = defaultArgs,
+    }
+
 
     local lastOption = nil
     local numArgs = 0
@@ -138,7 +145,14 @@ function cliOptionsFormat:parse(...)
 
             -- Get option table
             local option = self:getOptionByLongName(longName)
-            optionsPresent[option] = {}
+
+            -- Check if it already exists (not allowed)
+            if (optionsPresent[option] ~= nil) then
+                error("Not allowed to call option --" .. option.longName .. " or -" .. option.shortName .. " more than once")
+            end
+            optionsPresent[option] = {
+                count = 0,
+            }
             lastOption = option
 
         end
@@ -149,7 +163,14 @@ function cliOptionsFormat:parse(...)
             for _, shortName in pairs(shortNames) do
                 -- Get option table
                 local option = self:getOptionByShortName(shortName)
-                optionsPresent[option] = {}
+
+                -- Check if it already exists (not allowed)
+                if (optionsPresent[option] ~= nil) then
+                    error("Not allowed to call option --" .. option.longName .. " or -" .. option.shortName .. " more than once")
+                end
+                optionsPresent[option] = {
+                    count = 0,
+                }
                 lastOption = option
             end
 
@@ -157,8 +178,16 @@ function cliOptionsFormat:parse(...)
 
         if (not isLong and not isShort) then
 
+            if (lastOption == nil) then
+                defaultArgs.count = defaultArgs.count + 1
+                defaultArgs[defaultArgs.count] = arg
+            else
+                local argNum = optionsPresent[lastOption].count + 1
+                optionsPresent[lastOption][argNum] = arg
+                optionsPresent[lastOption].count = argNum
+            end
+            
         end
-
 
         argIndex = argIndex + 1
     end
@@ -184,6 +213,11 @@ end
 function cliOptionsFormat:isArgShortOption(arg)
     local arg = tostring(arg)
     if (string.len(arg) >= 2 and string.sub(arg, 1, 1) == "-" and string.sub(arg, 2, 2) ~= "-") then
+        
+        -- Filter out negative numbers
+        if (tonumber(arg) ~= nil) then
+            return false, 0, {}
+        end
     
         local values = {}
         local count = 0
@@ -220,9 +254,9 @@ end
 
 function cliOptionsFormat:doesInputContainLongName(inputs, longName)
     longName = string.lower(longName)
-    for option, _ in pairs(inputs) do
+    for option, args in pairs(inputs) do
         if (option.longName == longName) then
-            return true, option
+            return true, option, args
         end
     end
     return false
