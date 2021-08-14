@@ -54,7 +54,7 @@ end
 -- -----------------------------------------------------------------
 
 function cliOption:__tostring()
-    return "--" .. self.longName .. "\t\t" .. self.comment
+    return string.format("  -%s --%-32s %s", self.shortName, self.longName, self.comment)
 end
 
 -- #################################################################

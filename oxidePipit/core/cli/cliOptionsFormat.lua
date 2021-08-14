@@ -24,6 +24,11 @@ local cliOption = require("oxidePipit.core.cli.cliOption")
 -- Class declaration with any fields
 local cliOptionsFormat = {
     nonOptionMarker = "--",
+
+    versionLongName = "version",
+    versionShortName = "v",
+    helpLongName = "help",
+    helpShortName = "h",
 }
 
 -- Constructor
@@ -48,14 +53,18 @@ function cliOptionsFormat:__init(generateVersion, generateHelp)
 
     -- Create version option
     if (generateVersion or generateVersion == nil) then
-        self:addOption("v", "version", 0, 0, "Prints the version number of this program.")
+        self:addOption(self.versionShortName, self.versionLongName, 0, 0, "Prints the version number of this program.")
     end
 
     -- Create
     if (generateHelp or generateHelp == nil) then
-        self:addOption("h", "help", 0, 0, "Shows this screen.")
+        self:addOption(self.helpShortName, self.helpLongName, 0, 0, "Shows this screen.")
     end
 end
+
+-- #################################################################
+-- Static Properties
+-- #################################################################
 
 -- #################################################################
 -- Methods
@@ -134,8 +143,7 @@ function cliOptionsFormat:parse(...)
     local lastOption = nil
     local numArgs = 0
 
-    -- Skip filename
-    local argIndex = 2
+    local argIndex = 1
     while argIndex <= argsCount do
         local arg = args[argIndex]
 
@@ -256,10 +264,10 @@ function cliOptionsFormat:doesInputContainLongName(inputs, longName)
     longName = string.lower(longName)
     for option, args in pairs(inputs) do
         if (option.longName == longName) then
-            return true, option, args
+            return option, args
         end
     end
-    return false
+    return nil, nil
 end
 
 -- -----------------------------------------------------------------

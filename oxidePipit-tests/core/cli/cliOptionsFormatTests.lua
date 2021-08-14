@@ -25,7 +25,7 @@ function test1()
     local argsArray
     local inputs
 
-    argsArray = {"scriptname.lua", "--version"}
+    argsArray = {"--version"}
     inputs = argumentFormat:parse(table.unpack(argsArray))
 
     local showVersion, _ = cliOptionsFormat:doesInputContainLongName(inputs, "version")
@@ -33,7 +33,7 @@ function test1()
         print("Version 1!")
     end
 
-    argsArray = {"scriptname.lua", "-v"}
+    argsArray = {"-v"}
     inputs = argumentFormat:parse(table.unpack(argsArray))
 
     local showVersion, _ = cliOptionsFormat:doesInputContainLongName(inputs, "version")
@@ -49,7 +49,7 @@ end
 function test2()
     local argumentFormat = cliOptionsFormat:new(true, true)
 
-    local argsArray = {"scriptname.lua", "--help"}
+    local argsArray = {"--help"}
     local inputs = argumentFormat:parse(table.unpack(argsArray))
 
     local needHelp, _ = argumentFormat:doesInputContainLongName(inputs, "help")
@@ -69,7 +69,7 @@ function test3()
     local test1_string2 = "argument2"
     local test1_number1 = 43
     local test1_number2 = 11
-    local argsArray = {"scriptname.lua", test1_string1, tostring(test1_number1), tostring(test1_number2), test1_string2}
+    local argsArray = {test1_string1, tostring(test1_number1), tostring(test1_number2), test1_string2}
 
     local inputs = argumentFormat:parse(table.unpack(argsArray))
 
@@ -86,13 +86,13 @@ function test4()
     argumentFormat:addOption("r","rows",2, 0, "Required. Offset to last row (back), offset to first row (front).")
     argumentFormat:addOption("c", "columns", 2, 0, "Required. Offset to first column (left), Offset to last column (right).")
 
-    local argsArray = {"scriptname.lua", "-r", 15, -1, "--columns", 2, 2}
+    local argsArray = {"-r", 15, -1, "--columns", 2, 2}
 
     local inputs = argumentFormat:parse(table.unpack(argsArray))
 
-    local _, _, rowArgs = argumentFormat:doesInputContainLongName(inputs, "rows")
+    local _, rowArgs = argumentFormat:doesInputContainLongName(inputs, "rows")
 
-    local _, _, columnArgs = argumentFormat:doesInputContainLongName(inputs, "columns")
+    local _, columnArgs = argumentFormat:doesInputContainLongName(inputs, "columns")
 
 end
 
